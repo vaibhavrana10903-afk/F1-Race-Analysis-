@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formula 1 Race Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<nav>
+  <a class="logo" href="#top"><b>F1</b>RACE INTELLIGENCE</a>
+  <ul><li><a href="#dashboard">Dashboard</a></li><li><a href="#drivers">Drivers</a></li><li><a href="#teams">Teams</a></li><li><a href="#countries">Countries</a></li><li><a href="#story">Story</a></li><li><a href="#data">Data</a></li></ul>
+</nav>
+
+<header class="hero" id="top">
+  <h1>FORMULA <span>1</span></h1>
+  <div class="sub">RACE INTELLIGENCE DASHBOARD</div>
+  <p>Driver performance, team strength, reliability and tyre strategy across 17 seasons of Grand Prix results, built from a Tableau workbook of 6,464 race outcomes.</p>
+  <div class="btns"><a class="btn red" href="#dashboard">View dashboard</a><a class="btn" href="#story">Explore story</a></div>
+  <div class="kpis">
+    <div class="kpi"><b data-n="10">0</b><span>Competing teams</span></div>
+    <div class="kpi"><b data-n="17">0</b><span>Seasons in play</span></div>
+    <div class="kpi"><b data-n="6464">0</b><span>Race outcomes logged</span></div>
+    <div class="kpi"><b data-n="29">0</b><span>Circuits showcased</span></div>
+  </div>
+</header>
+
+<section id="dashboard">
+  <div class="head"><h2>Race Intelligence Dashboard</h2><p>The same views as the Tableau dashboard, rebuilt for the web. Use the Top N control to match the dashboard’s parameter.</p></div>
+  <div class="grid">
+    <div class="card" id="drivers">
+      <h3>Driver performance leaderboard</h3>
+      <p class="note">Total career points in the dataset.</p>
+      <label class="ctl">Top N drivers <input id="topn" type="range" min="3" max="8" value="8" aria-label="Top N drivers"><b id="topv">8</b></label>
+      <div class="bars" id="driverBars"></div>
+    </div>
+    <div class="card" id="teams">
+      <h3>Team performance ranking</h3>
+      <p class="note">Ordered by total points. Red Bull Racing leads with 8,006.</p>
+      <div class="bars" id="teamBars"></div>
+    </div>
+    <div class="card" id="countries" style="grid-column:1/-1">
+      <h3>Race entries by Grand Prix nation</h3>
+      <p class="note">Number of race outcomes logged per host country.</p>
+      <div class="bars" id="countryBars"></div>
+    </div>
+  </div>
+</section>
+
+<section id="story">
+  <div class="head"><h2>From global overview to championship success</h2><p>The workbook’s story, one chapter at a time.</p></div>
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div class="card story" id="storyBox" role="tabpanel"></div>
+</section>
+
+<section id="dims">
+  <div class="head"><h2>What the workbook analyses</h2><p>Each view is a worksheet in the Tableau file, driven by columns from the race results table.</p></div>
+  <div class="dims">
+    <div class="dim"><h3>Driver reliability</h3><p>Retirements per driver, broken down by reason, plus DNF trends season by season.</p><code>dnf · dnf_reason · driver</code></div>
+    <div class="dim"><h3>Team reliability</h3><p>DNF rate by team and by circuit type, to show where cars fail most.</p><code>SUM(dnf) / COUNT(race_id)</code></div>
+    <div class="dim"><h3>Podium achievements</h3><p>Podiums by driver and team, counting any finish in the top three.</p><code>finish_position &lt;= 3</code></div>
+    <div class="dim"><h3>Tyre strategy</h3><p>Average points by starting compound, and how tyre strategies split across races.</p><code>starting_compound · tyre_strategy</code></div>
+    <div class="dim"><h3>Seasonal team points</h3><p>How each constructor’s points total moved from season to season.</p><code>season · team · points</code></div>
+    <div class="dim"><h3>Race participation</h3><p>Where Grand Prix entries were logged, by country on a world map.</p><code>COUNTD(country)</code></div>
+  </div>
+</section>
+
+<section id="data">
+  <div class="head"><h2>About the data</h2></div>
+  <p class="src">Source: a Tableau workbook built on the “F1 Racing Project Dataset” (sheet <i>race_results</i>, 6,464 rows, 42 columns: season, round, circuit, driver, team, grid and finish position, points, DNF reason, pit stops, tyre strategy, weather and more). The uploaded workbook holds the structure only, so figures here are the values shown on its dashboard. Team bars other than Red Bull Racing are scaled from the dashboard chart.</p>
+</section>
+<footer>Formula 1 Race Intelligence · Built with Tableau</footer>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
